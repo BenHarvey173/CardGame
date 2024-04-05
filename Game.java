@@ -1,11 +1,16 @@
 
 public class Game {
     public static void main(String[] args) {
-        Deck newDeck = new Deck();
-        System.out.println(newDeck.getCards());
-        newDeck.shuffle();
-        System.out.println(newDeck.getCards());
-        System.out.println(newDeck.drawCard(5));
+        HoldEm pokey = new HoldEm(new Deck(), 3);
+        System.out.println(pokey.getHand(0));
+        pokey.drawRiver();
+        System.out.println(pokey.getHand(0));
+        pokey.drawRiver();
+        System.out.println(pokey.getHand(0));
+        pokey.drawRiver();
+        System.out.println(pokey.getHand(0));
+
+        System.out.println(pokey.getHand(1));
 
 
     }
