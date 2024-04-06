@@ -12,7 +12,7 @@ public class HoldEm {
     }
     public void drawRiver() {
         int len = hands[0].getCards().size() - 2;
-        if(len <= 5) {
+        if(len <= 100) {
             for (Hand hand : hands) {
                 hand.addCard(deck.drawCard());
             }
