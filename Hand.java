@@ -1,11 +1,15 @@
 import java.util.ArrayList;
 public class Hand {
     private ArrayList<Card> cards;
-    public Hand(ArrayList<Card> cards) {
+    private String order;
+    public Hand(ArrayList<Card> cards, String order) {
         this.cards = cards;
+        this.order = order;
+        sortHand(order);
     }
     public void addCard(Card card) {
         cards.add(card);
+        sortHand(order);
     }
     public String toString() {
         return cards.toString();
@@ -13,9 +17,104 @@ public class Hand {
     public ArrayList<Card> getCards() {
         return cards;
     }
+    private double scoreHigh() {
+        double ret = 0.0;
+        for (int i = 4; i >= 0; i--) {
+            ret+= cards.get(i).getRank() / (Math.pow(100, 5 - i));
+        }
+        return ret;
+    }
+    public double scoreHand() {
+        sortHand("rank");
+        ArrayList<Integer> ranks = new ArrayList<Integer>();
+        for (int i = 0; i < cards.size(); i++) {
+            ranks.add(cards.get(i).getRank());
+        }
+        sortHand("suit");
+        String handSuit = cards.get(0).getSuit();
+        boolean flush = true;
+        for (Card card : cards) { //check flush
+            if (!card.getSuit().equals(handSuit)) {
+                flush = false;
+            }
+        }
+        sortHand("rank");
+        boolean straight = true;
+        for (int i = cards.size() - 2; i > 0; i--) {
+            if (ranks.get(i) != ranks.get(i + 1)) {
+                straight = false;
+            }
+        }
+        if (straight) {
+            if (flush) {
+                if (ranks.get(3) == 12) {
+                    return 10.0; // royal flush = 10
+                }
+                return 9 + scoreHigh(); // straight flush = 9 + tie
+            }
+            return 5.0 + scoreHigh(); // straight = 5 + tie
+        }
+        if (flush) {
+            return 6 + scoreHigh(); // flush = 6 + tie
+        }
+        if (ranks.get(1) == ranks.get(2) && ranks.get(2) == ranks.get(3)) {
+            if(ranks.get(0) == ranks.get(2) || ranks.get(4) == ranks.get(2)) {
+                return 8.0; // 4 = 8
+            }
+        }
+        if(ranks.get(2) == ranks.get(1) && ranks.get(0) == ranks.get(1)) {
+            if (ranks.get(3) == ranks.get(4)) {
+                return 7.0 + ranks.get(2) / 100.0;
+            }
+            return 4.0 + ranks.get(2) / 100.0 + ranks.get(4) / 10000.0 + ranks.get(3) / 1000000.0; // left 3
+        }  
+        if (ranks.get(2) == ranks.get(3) && ranks.get(2) == ranks.get(4)) {
+            if (ranks.get(0) == ranks.get(1)) {
+                return 7.0 + ranks.get(2) / 100.0;
+            }
+            return 4.0 + ranks.get(2) / 100.0 + ranks.get(1) / 10000.0 + ranks.get(0) / 1000000.0; // right 3
+        }
+        if (ranks.get(2) ==  ranks.get(1) && ranks.get(2) == ranks.get(3)) {
+            return 4.0 + ranks.get(2) / 100.0 + ranks.get(4) / 10000.0 + ranks.get(0) / 1000000.0; // mid 3
+        }
+        for(int i = 4; i > 0; i--) {
+            if (ranks.get(i) == ranks.get(i-1)) {
+                if (i > 1) {
+                    for (int j = i - 2; j > 0; j++) {
+                        if (ranks.get(j) == ranks.get(j-1)) {
+                            double ret = 3.0 + ranks.get(i) / 100.0 + ranks.get(j) / 10000.0; // 2pair
+                            if (j > 1) {
+                                ret += ranks.get(0) / 1000000.0;
+                            }
+                            else if (i < 4) {
+                                ret += ranks.get(4) / 1000000.0;
+                            }
+                            else {
+                                ret += ranks.get(2) / 1000000.0;
+                            }
+                            return ret;
+                        }
+                    }
+                }
+                double ret = 2.0 + ranks.get(i) / 100.0;
+                for(int j = 4; j > i; j--) {
+                    ret += ranks.get(j) / Math.pow(100, 6 - i);
+                }
+                for(int j = i - 2; j >= 0; j--) {
+                    ret += ranks.get(j) / Math.pow(100, 6 - i);
+                }
+                return ret;
+            }
+        }
+        return 1.0 + scoreHigh();
+    }
+    public void sortHand() {
+        sortHand(order);
+    }
     public void sortHand(String option) {
         String[] suits = {"spades", "clubs", "hearts", "diamonds"};
         if(option.equals("suit")) {
+            order = "suit";
             int index = 0;
             for (int j = 0; j < 4; j++) {
                 for (int i = index; i < cards.size(); i++) {
@@ -38,6 +137,7 @@ public class Hand {
                 }
             }
         } else if (option.equals("rank")) {
+            order = "rank";
             // System.out.println(cards);
             for (int i = 1; i < cards.size(); i++) {
                 // System.out.println(cards + " " + cards.get(i));
@@ -80,6 +180,7 @@ public class Hand {
             }
             // System.out.println(cards);
         } else if (option.equals("random")) {
+            order = "random";
             // System.out.println(cards);
             ArrayList<Card> newCards = new ArrayList<Card>();
             for (int i = 0; i < cards.size(); i++) {

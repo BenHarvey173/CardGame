@@ -11,6 +11,9 @@ public class Card {
         return suit;
     }
     public int getRank() {
+        if(rank == 1) {
+            return 13;
+        }
         return rank;
     }
     public int getIndex() {
