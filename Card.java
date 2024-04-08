@@ -29,9 +29,22 @@ public class Card {
             temp += "Q";
         } else if (rank == 11) {
             temp += "J";
+        } else if (rank == 10) {
+            temp += "T";
         } else {
             temp += rank;
         }
-        return temp + " of " + suit;
+        String shape = "";
+        if (suit.equals("spades")) {
+            shape = "♠️";
+        } else if(suit.equals("clubs")) {
+            shape = "♣︎";
+        } else if(suit.equals("hearts")) {
+            shape = "♥︎";
+        } else if(suit.equals("diamonds")) {
+            shape = "♦︎";
+        }
+        return temp + " of " + shape;
     }
+
 }
