@@ -21,11 +21,21 @@ public class HoldEm {
     public Hand getHand(int player) {
         return hands[player];
     }
-    public void scoreHands() {
-        for (Hand hand : hands) {
-            System.out.print(hand + ": ");
-            System.out.println(hand.scoreHand());
-            hand.sortHand();
+    public Hand scoreHands() {
+        double[] scores = new double[hands.length];
+        double max = hands[0].scoreHand();
+        Hand winner = hands[0];
+        for (int i = 0; i < hands.length; i++) {
+            System.out.print(hands[i] + ": ");
+            System.out.println(hands[i].scoreHand());
+            scores[i] = hands[i].scoreHand();
+            hands[i].sortHand();
+            if(scores[i] > max) {
+                max = scores[i];
+                winner = hands[i];
+            }
         }
+        System.out.println("Winner: " + winner);
+        return winner;
     }
 }

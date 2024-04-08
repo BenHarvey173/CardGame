@@ -125,7 +125,7 @@ public class Hand {
                         cards.set(i, temp);
                         int newIndex = index;
                         while (newIndex > 0) {
-                            if(cards.get(newIndex).getRank() < cards.get(newIndex - 1).getRank() && cards.get(newIndex).getSuit().equals(cards.get(newIndex - 1).getSuit())) {
+                            if(cards.get(newIndex).getRank() > cards.get(newIndex - 1).getRank() && cards.get(newIndex).getSuit().equals(cards.get(newIndex - 1).getSuit())) {
                                 temp = new Card(cards.get(newIndex - 1).getSuit(), cards.get(newIndex - 1).getRank(), cards.get(newIndex - 1).getIndex());
                                 cards.set(newIndex - 1, new Card(cards.get(newIndex).getSuit(), cards.get(newIndex).getRank(), cards.get(newIndex).getIndex()));
                                 cards.set(newIndex, temp);
@@ -143,7 +143,7 @@ public class Hand {
                 // System.out.println(cards + " " + cards.get(i));
                 int newIndex = i;
                 while (newIndex > 0) {
-                    if (cards.get(newIndex).getRank() < cards.get(newIndex - 1).getRank()) {
+                    if (cards.get(newIndex).getRank() > cards.get(newIndex - 1).getRank()) {
                         Card temp = new Card(cards.get(newIndex - 1).getSuit(), cards.get(newIndex - 1).getRank(), cards.get(newIndex - 1).getIndex());
                         cards.set(newIndex - 1, new Card(cards.get(newIndex).getSuit(), cards.get(newIndex).getRank(), cards.get(newIndex).getIndex()));
                         cards.set(newIndex, temp);

@@ -20,9 +20,18 @@ public class Card {
         return index;
     }
     public String toString() {
+        String temp = "";
         if(rank == 1) {
-            return "Ace of " + suit;
+            temp += "A";
+        } else if (rank == 13) {
+            temp += "K";
+        } else if (rank == 12) {
+            temp += "Q";
+        } else if (rank == 11) {
+            temp += "J";
+        } else {
+            temp += rank;
         }
-        return rank + " of " + suit;
+        return temp + " of " + suit;
     }
 }
