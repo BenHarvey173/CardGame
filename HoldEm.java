@@ -2,12 +2,12 @@
 public class HoldEm {
     private Deck deck;
     private Hand[] hands;
-    public HoldEm(Deck givenDeck, int players) {
-        deck = givenDeck;
+    public HoldEm(int players) {
+        deck = new Deck();
         deck.shuffle();
         hands = new Hand[players];
         for (int i = 0; i < hands.length; i++) {
-            hands[i] = new Hand(deck.drawCard(2), "rank");
+            hands[i] = new Hand(deck.drawCards(2), "rank");
         }
     }
     public void drawRiver() {

@@ -11,7 +11,19 @@ public class Deck {
             }
         }
     }
-    public void shuffle() {
+    public Deck(int count) {
+        String[] suits = {"spades", "clubs", "hearts", "diamonds"};
+        for(int c = 0; c < count; c++) {
+            int index = 0;
+            for(String suit : suits) {
+                for (int i = 1; i <= 13; i++) {
+                    cards.add(new Card(suit, i, index));
+                    index++;
+                }
+            }
+        }
+    }
+     public void shuffle() {
         ArrayList<Card> newCards = new ArrayList<Card>();
         for (int i = 0; i < cards.size(); i++) {
             newCards.add(null);
@@ -30,7 +42,7 @@ public class Deck {
     public Card drawCard() {
         return cards.remove(cards.size() - 1);
     }
-    public ArrayList<Card> drawCard(int count) {
+    public ArrayList<Card> drawCards(int count) {
         ArrayList<Card> drawnCards = new ArrayList<Card>();
         for(int i = 0; i < count; i++) {
             drawnCards.add(drawCard());
