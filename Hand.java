@@ -48,46 +48,46 @@ public class Hand {
                 if (ranks.get(1) == 12) {
                     return "Royal Flush";
                 }
-                return "Straight Flush";
+                return "Straight Flush " + cards.get(0).getRankString() + cards.get(0).getSuitString();
             }
-            return "Straight";
+            return "Straight " + cards.get(0).getRankString();
         }
         if (flush) {
-            return "Flush";
+            return "Flush " + cards.get(0).getSuitString();
         }
         if (ranks.get(1) == ranks.get(2) && ranks.get(2) == ranks.get(3)) {
             if(ranks.get(0) == ranks.get(2) || ranks.get(4) == ranks.get(2)) {
-                return "Quad";
+                return "Quad " + cards.get(2).getRankString();
             }
         }
         if(ranks.get(2) == ranks.get(1) && ranks.get(0) == ranks.get(1)) {
             if (ranks.get(3) == ranks.get(4)) {
                 return "Full House";
             }
-            return "3 of a Kind";
+            return "3 Kind " + cards.get(2).getRankString();
         }  
         if (ranks.get(2) == ranks.get(3) && ranks.get(2) == ranks.get(4)) {
             if (ranks.get(0) == ranks.get(1)) {
-                return "Full Hhouse";
+                return "Full House";
             }
-            return "3 of a Kind"; // right 3
+            return "3 Kind " + cards.get(2).getRankString(); // right 3
         }
         if (ranks.get(2) ==  ranks.get(1) && ranks.get(2) == ranks.get(3)) {
-            return "3 of a Kind"; // mid 3
+            return "3 Kind " + cards.get(2).getRankString(); // mid 3
         }
         for(int i = 0; i < 4; i++) {
             if (ranks.get(i) == ranks.get(i+1)) {
                 if (i < 4) {
                     for (int j = i + 2; j < 4; j++) {
                         if (ranks.get(j) == ranks.get(j+1)) {
-                            return "2 Pair"; // + ranks.get(i_) and ranks.get(j)
+                            return "2 Pair "; // + ranks.get(i_) and ranks.get(j)
                         }
                     }
                 }
-                return "pair"; // ranks.get(i)
+                return "Pair " + cards.get(i).getRankString(); // ranks.get(i)
             }
         }
-        return "High " + cards.get(0).toString();
+        return "High " + cards.get(0).getRankString();
     }
     public double scorePokerHand() {
         sortHand("rank");
@@ -115,7 +115,7 @@ public class Hand {
                 if (ranks.get(1) == 12) {
                     return 10.0; // royal flush = 10
                 }
-                return 9 + scoreHigh(); // straight flush = 9 + tie
+                return 9.0 + scoreHigh(); // straight flush = 9 + tie
             }
             return 5.0 + scoreHigh(); // straight = 5 + tie
         }
@@ -163,10 +163,10 @@ public class Hand {
                 }
                 double ret = 2.0 + ranks.get(i) / 100.0; // 2kind = 2
                 for(int j = 0; j < i; j++) {
-                    ret += ranks.get(j) / Math.pow(100, i + 1);
+                    ret += ranks.get(j) / Math.pow(100, i + j);
                 }
-                for(int j = i + 2; j < 4; j++) {
-                    ret += ranks.get(j) / Math.pow(100, i + 1);
+                for(int j = i + 2; j < 5; j++) {
+                    ret += ranks.get(j) / Math.pow(100, j - 2);
                 }
                 return ret;
             }

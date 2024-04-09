@@ -19,9 +19,38 @@ public class Card {
         }
         return rank;
     }
+    public String getRankString() {
+        if(rank == 1 || rank == 14) {
+            return "A";
+        } else if (rank == 13) {
+            return "K";
+        } else if (rank == 12) {
+            return "Q";
+        } else if (rank == 11) {
+            return "J";
+        } else if (rank == 10) {
+            return "T";
+        } else {
+            return Integer.toString(rank);
+        }
+    }
+    public String getSuitString() {
+        if (suit.equals("spades")) {
+            return "♠️";
+        } else if(suit.equals("clubs")) {
+            return "♣︎";
+        } else if(suit.equals("hearts")) {
+            return "♥︎";
+        } else if(suit.equals("diamonds")) {
+            return "♦︎";
+        } else {
+            return "l";
+        }
+    }
     public int getIndex() {
         return index;
     }
+    
     public String toString() {
         String temp = "";
         if(rank == 1 || rank == 14) {

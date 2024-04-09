@@ -7,16 +7,24 @@ public class HoldEm {
         deck.shuffle();
         hands = new Hand[players];
         for (int i = 0; i < hands.length; i++) {
-            hands[i] = new Hand(deck.drawCards(2), "rank");
+            
+            hands[i] = new Hand(deck.drawCards(1), "rank");
+        } 
+        for(Hand hand : hands) {
+            hand.addCard(deck.drawCard());
         }
     }
-    public void drawRiver() {
+    public Card drawRiver() {
         int len = hands[0].getCards().size() - 2;
+        
         if(len < 3) {
+            Card drawn = deck.drawCard();
             for (Hand hand : hands) {
-                hand.addCard(deck.drawCard());
+                hand.addCard(drawn);
             }
+            return drawn;
         }
+        return null;
     }
     public Hand getHand(int player) {
         return hands[player];
@@ -36,7 +44,8 @@ public class HoldEm {
                 winner = hands[i];
             }
         }
-        System.out.println("Winner: " + winner);
+        System.out.print("Winner: " + winner);
+        System.out.println(": " + winner.handType());
         return winner;
     }
 }
