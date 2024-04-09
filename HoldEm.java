@@ -23,12 +23,13 @@ public class HoldEm {
     }
     public Hand scoreHands() {
         double[] scores = new double[hands.length];
-        double max = hands[0].scoreHand();
+        double max = hands[0].scorePokerHand();
         Hand winner = hands[0];
         for (int i = 0; i < hands.length; i++) {
             System.out.print(hands[i] + ": ");
-            System.out.println(hands[i].scoreHand());
-            scores[i] = hands[i].scoreHand();
+            System.out.print(hands[i].handType() + ", ");
+            System.out.println(hands[i].scorePokerHand());
+            scores[i] = hands[i].scorePokerHand();
             hands[i].sortHand();
             if(scores[i] > max) {
                 max = scores[i];

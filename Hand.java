@@ -24,7 +24,72 @@ public class Hand {
         }
         return ret;
     }
-    public double scoreHand() {
+    public String handType() {
+        sortHand("rank");
+        ArrayList<Integer> ranks = new ArrayList<Integer>();
+        for (int i = 0; i < cards.size(); i++) {
+            ranks.add(cards.get(i).getRank());
+        }
+        String handSuit = cards.get(0).getSuit();
+        boolean flush = true;
+        for (Card card : cards) { //check flush
+            if (!card.getSuit().equals(handSuit)) {
+                flush = false;
+            }
+        }
+        boolean straight = true;
+        for (int i = cards.size() - 2; i > 0; i--) {
+            if (ranks.get(i) != ranks.get(i + 1)) {
+                straight = false;
+            }
+        }
+        if (straight) {
+            if (flush) {
+                if (ranks.get(1) == 12) {
+                    return "Royal Flush";
+                }
+                return "Straight Flush";
+            }
+            return "Straight";
+        }
+        if (flush) {
+            return "Flush";
+        }
+        if (ranks.get(1) == ranks.get(2) && ranks.get(2) == ranks.get(3)) {
+            if(ranks.get(0) == ranks.get(2) || ranks.get(4) == ranks.get(2)) {
+                return "Quad";
+            }
+        }
+        if(ranks.get(2) == ranks.get(1) && ranks.get(0) == ranks.get(1)) {
+            if (ranks.get(3) == ranks.get(4)) {
+                return "Full House";
+            }
+            return "3 of a Kind";
+        }  
+        if (ranks.get(2) == ranks.get(3) && ranks.get(2) == ranks.get(4)) {
+            if (ranks.get(0) == ranks.get(1)) {
+                return "Full Hhouse";
+            }
+            return "3 of a Kind"; // right 3
+        }
+        if (ranks.get(2) ==  ranks.get(1) && ranks.get(2) == ranks.get(3)) {
+            return "3 of a Kind"; // mid 3
+        }
+        for(int i = 0; i < 4; i++) {
+            if (ranks.get(i) == ranks.get(i+1)) {
+                if (i < 4) {
+                    for (int j = i + 2; j < 4; j++) {
+                        if (ranks.get(j) == ranks.get(j+1)) {
+                            return "2 Pair"; // + ranks.get(i_) and ranks.get(j)
+                        }
+                    }
+                }
+                return "pair"; // ranks.get(i)
+            }
+        }
+        return "High " + cards.get(0).toString();
+    }
+    public double scorePokerHand() {
         sortHand("rank");
         ArrayList<Integer> ranks = new ArrayList<Integer>();
         for (int i = 0; i < cards.size(); i++) {

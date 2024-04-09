@@ -5,6 +5,9 @@ public class Card {
     public Card(String suit, int rank, int index) {
         this.suit = suit;
         this.rank = rank;
+        if (rank == 14) {
+            this.rank = 1;
+        }
         this.index = index;
     }
     public String getSuit() {
