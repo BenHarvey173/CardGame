@@ -7,7 +7,7 @@ public class Game {
         //System.out.println(pokey.getHand(0));
         pokey.drawRiver();
         //System.out.println(pokey.getHand(0));
-        pokey.drawRiver();
+        //pokey.drawRiver();
         pokey.drawRiver();
         
         //System.out.println(pokey.getHand(0));

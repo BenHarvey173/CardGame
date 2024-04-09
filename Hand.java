@@ -19,8 +19,8 @@ public class Hand {
     }
     private double scoreHigh() {
         double ret = 0.0;
-        for (int i = 4; i >= 0; i--) {
-            ret+= cards.get(i).getRank() / (Math.pow(100, 5 - i));
+        for (int i = 0; i < 5; i++) {
+            ret+= cards.get(i).getRank() / (Math.pow(100, i + 1));
         }
         return ret;
     }
@@ -47,7 +47,7 @@ public class Hand {
         }
         if (straight) {
             if (flush) {
-                if (ranks.get(3) == 12) {
+                if (ranks.get(1) == 12) {
                     return 10.0; // royal flush = 10
                 }
                 return 9 + scoreHigh(); // straight flush = 9 + tie
@@ -64,44 +64,44 @@ public class Hand {
         }
         if(ranks.get(2) == ranks.get(1) && ranks.get(0) == ranks.get(1)) {
             if (ranks.get(3) == ranks.get(4)) {
-                return 7.0 + ranks.get(2) / 100.0;
+                return 7.0 + ranks.get(2) / 100.0; // house
             }
-            return 4.0 + ranks.get(2) / 100.0 + ranks.get(4) / 10000.0 + ranks.get(3) / 1000000.0; // left 3
+            return 4.0 + ranks.get(2) / 100.0 + ranks.get(0) / 10000.0 + ranks.get(1) / 1000000.0; // left 3
         }  
         if (ranks.get(2) == ranks.get(3) && ranks.get(2) == ranks.get(4)) {
             if (ranks.get(0) == ranks.get(1)) {
                 return 7.0 + ranks.get(2) / 100.0;
             }
-            return 4.0 + ranks.get(2) / 100.0 + ranks.get(1) / 10000.0 + ranks.get(0) / 1000000.0; // right 3
+            return 4.0 + ranks.get(2) / 100.0 + ranks.get(0) / 10000.0 + ranks.get(1) / 1000000.0; // right 3
         }
         if (ranks.get(2) ==  ranks.get(1) && ranks.get(2) == ranks.get(3)) {
-            return 4.0 + ranks.get(2) / 100.0 + ranks.get(4) / 10000.0 + ranks.get(0) / 1000000.0; // mid 3
+            return 4.0 + ranks.get(2) / 100.0 + ranks.get(0) / 10000.0 + ranks.get(4) / 1000000.0; // mid 3
         }
-        for(int i = 4; i > 0; i--) {
-            if (ranks.get(i) == ranks.get(i-1)) {
-                if (i > 1) {
-                    for (int j = i - 2; j > 0; j++) {
-                        if (ranks.get(j) == ranks.get(j-1)) {
+        for(int i = 0; i < 4; i++) {
+            if (ranks.get(i) == ranks.get(i+1)) {
+                if (i < 4) {
+                    for (int j = i + 2; j < 4; j++) {
+                        if (ranks.get(j) == ranks.get(j+1)) {
                             double ret = 3.0 + ranks.get(i) / 100.0 + ranks.get(j) / 10000.0; // 2pair
-                            if (j > 1) {
+                            if (i > 0) { // ppppn
                                 ret += ranks.get(0) / 1000000.0;
                             }
-                            else if (i < 4) {
-                                ret += ranks.get(4) / 1000000.0;
+                            else if (i == 0 && j == 3) { // 
+                                ret += ranks.get(2) / 1000000.0;
                             }
                             else {
-                                ret += ranks.get(2) / 1000000.0;
+                                ret += ranks.get(4) / 1000000.0;
                             }
                             return ret;
                         }
                     }
                 }
-                double ret = 2.0 + ranks.get(i) / 100.0;
-                for(int j = 4; j > i; j--) {
-                    ret += ranks.get(j) / Math.pow(100, 6 - i);
+                double ret = 2.0 + ranks.get(i) / 100.0; // 2kind = 2
+                for(int j = 0; j < i; j++) {
+                    ret += ranks.get(j) / Math.pow(100, i + 1);
                 }
-                for(int j = i - 2; j >= 0; j--) {
-                    ret += ranks.get(j) / Math.pow(100, 6 - i);
+                for(int j = i + 2; j < 4; j++) {
+                    ret += ranks.get(j) / Math.pow(100, i + 1);
                 }
                 return ret;
             }

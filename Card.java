@@ -12,7 +12,7 @@ public class Card {
     }
     public int getRank() {
         if(rank == 1) {
-            return 13;
+            return 14;
         }
         return rank;
     }
@@ -21,7 +21,7 @@ public class Card {
     }
     public String toString() {
         String temp = "";
-        if(rank == 1) {
+        if(rank == 1 || rank == 14) {
             temp += "A";
         } else if (rank == 13) {
             temp += "K";
