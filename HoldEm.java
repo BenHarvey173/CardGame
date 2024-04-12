@@ -31,13 +31,14 @@ public class HoldEm {
     }
     public Hand scoreHands() {
         double[] scores = new double[hands.length];
-        double max = hands[0].scorePokerHand();
+        double max = hands[0].scoreBestHand().scorePokerHand();
         Hand winner = hands[0];
         for (int i = 0; i < hands.length; i++) {
+            Hand temp = hands[i].scoreBestHand();
             System.out.print(hands[i] + ": ");
-            System.out.print(hands[i].handType() + ", ");
-            System.out.println(hands[i].scorePokerHand());
-            scores[i] = hands[i].scorePokerHand();
+            System.out.print(temp.handType() + ", ");
+            System.out.println(temp.scorePokerHand());
+            scores[i] = temp.scorePokerHand();
             hands[i].sortHand();
             if(scores[i] > max) {
                 max = scores[i];

@@ -11,7 +11,7 @@ public class Game {
         System.out.println(holdEm.drawRiver());
         System.out.println(holdEm.drawRiver());
         System.out.println(holdEm.drawRiver());
-        System.out.println(holdEm.getHand(0).scoreBestHand());
+        holdEm.scoreHands();
         
    
     }

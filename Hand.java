@@ -29,24 +29,27 @@ public class Hand {
     }
     public Hand scoreBestHand() {
         Hand max = new Hand(new ArrayList<Card>(cards.subList(2, cards.size())), order);
-
+        System.out.println(cards);
         for(int i = 0; i < cards.size() - 1; i++) {
             for (int j = i + 1; j < cards.size(); j++) {
                 Card temp = cards.remove(j);
                 Card temp2 = cards.remove(i);
+                // System.out.print(cards);
+                // System.out.print(handType());
                 double score = scorePokerHand();
+                // System.out.println(score);
                 if (score > max.scorePokerHand()) {
                     ArrayList<Card> newCards = new ArrayList<Card>();
                     for(Card card : cards) {
                         newCards.add(card);
                     }
                     max.setCards(newCards);
-                    System.out.print(newCards);
-                    System.out.println(max.scorePokerHand());
+                    // System.out.print(newCards);
+                    // System.out.println(max.scorePokerHand());
                 }
                 cards.add(i, temp2);
                 cards.add(j, temp);
-                System.out.println(cards);
+                 //System.out.println(cards);
             }
         }
         return max;
@@ -188,12 +191,13 @@ public class Hand {
                         }
                     }
                 }
-                double ret = 2.0 + ranks.get(i) / 100.0; // 2kind = 2
-                for(int j = 0; j < i; j++) {
-                    ret += ranks.get(j) / Math.pow(100, i + j);
+                double ret = 2.0 + ranks.get(i) / 100.0; // pair = 2
+                int temp = 2;
+                for(int j = 0; j < i; j++, temp++) {
+                    ret += ranks.get(j) / Math.pow(100, temp);
                 }
-                for(int j = i + 2; j < 5; j++) {
-                    ret += ranks.get(j) / Math.pow(100, j - 2);
+                for(int j = i + 2; j < 5; j++, temp++) {
+                    ret += ranks.get(j) / Math.pow(100, temp);
                 }
                 return ret;
             }
