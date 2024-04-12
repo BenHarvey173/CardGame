@@ -9,10 +9,17 @@ public class Game {
         System.out.println(holdEm.drawRiver());
         System.out.println(holdEm.drawRiver());
         System.out.println(holdEm.drawRiver());
-        holdEm.scoreHands();
+        System.out.println(holdEm.drawRiver());
+        System.out.println(holdEm.drawRiver());
+        System.out.println(holdEm.getHand(0).scoreBestHand());
+        
+   
+    }
+    public static void playBlackJack() {
+        
     }
     public static void main(String[] args) {
-        playHoldEm(3);
+        playHoldEm(4);
 
 
     }

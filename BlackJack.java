@@ -9,6 +9,5 @@ public class BlackJack {
         tempCards.add(deck.drawCards(1).get(1));
         tempCards.add(deck.drawCards(1).get(1)); // now 2 cards
         hand = new Hand(tempCards, "rank");
-
     }
 }

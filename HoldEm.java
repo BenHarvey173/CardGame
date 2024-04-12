@@ -17,7 +17,7 @@ public class HoldEm {
     public Card drawRiver() {
         int len = hands[0].getCards().size() - 2;
         
-        if(len < 3) {
+        if(len < 5) {
             Card drawn = deck.drawCard();
             for (Hand hand : hands) {
                 hand.addCard(drawn);

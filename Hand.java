@@ -17,12 +17,39 @@ public class Hand {
     public ArrayList<Card> getCards() {
         return cards;
     }
+    public void setCards(ArrayList<Card> cards) {
+        this.cards = cards;
+    }
     private double scoreHigh() {
         double ret = 0.0;
         for (int i = 0; i < 5; i++) {
             ret+= cards.get(i).getRank() / (Math.pow(100, i + 1));
         }
         return ret;
+    }
+    public Hand scoreBestHand() {
+        Hand max = new Hand(new ArrayList<Card>(cards.subList(2, cards.size())), order);
+
+        for(int i = 0; i < cards.size() - 1; i++) {
+            for (int j = i + 1; j < cards.size(); j++) {
+                Card temp = cards.remove(j);
+                Card temp2 = cards.remove(i);
+                double score = scorePokerHand();
+                if (score > max.scorePokerHand()) {
+                    ArrayList<Card> newCards = new ArrayList<Card>();
+                    for(Card card : cards) {
+                        newCards.add(card);
+                    }
+                    max.setCards(newCards);
+                    System.out.print(newCards);
+                    System.out.println(max.scorePokerHand());
+                }
+                cards.add(i, temp2);
+                cards.add(j, temp);
+                System.out.println(cards);
+            }
+        }
+        return max;
     }
     public String handType() {
         sortHand("rank");
