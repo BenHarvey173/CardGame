@@ -5,7 +5,7 @@ public class Game {
         for(int i = 0; i < players; i++) {
             System.out.print(holdEm.getHand(i));
         }
-        System.out.println("/////////////////////////////////////////");
+        System.out.println("");
         System.out.println(holdEm.drawRiver());
         System.out.println(holdEm.drawRiver());
         System.out.println(holdEm.drawRiver());
@@ -20,6 +20,8 @@ public class Game {
     }
     public static void main(String[] args) {
         playHoldEm(4);
+        
+
 
 
     }

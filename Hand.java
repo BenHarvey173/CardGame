@@ -110,7 +110,7 @@ public class Hand {
                 if (i < 4) {
                     for (int j = i + 2; j < 4; j++) {
                         if (ranks.get(j) == ranks.get(j+1)) {
-                            return "2 Pair "; // + ranks.get(i_) and ranks.get(j)
+                            return "2 Pair"; // + ranks.get(i_) and ranks.get(j)
                         }
                     }
                 }

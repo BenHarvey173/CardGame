@@ -31,19 +31,20 @@ public class HoldEm {
     }
     public Hand scoreHands() {
         double[] scores = new double[hands.length];
-        double max = hands[0].scoreBestHand().scorePokerHand();
+        double max = 0.0;
         Hand winner = hands[0];
         for (int i = 0; i < hands.length; i++) {
             Hand temp = hands[i].scoreBestHand();
-            System.out.print(hands[i] + ": ");
+            System.out.print(temp + ": ");
             System.out.print(temp.handType() + ", ");
             System.out.println(temp.scorePokerHand());
             scores[i] = temp.scorePokerHand();
             hands[i].sortHand();
             if(scores[i] > max) {
                 max = scores[i];
-                winner = hands[i];
+                winner = temp;
             }
+            System.out.println("///////////////////////////////////////");
         }
         System.out.print("Winner: " + winner);
         System.out.println(": " + winner.handType());
