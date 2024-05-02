@@ -2,6 +2,9 @@ import java.util.Scanner;
 public class Play {
     private int players;
     private int[] money;
+    private boolean[] in;
+    private int[] paid;
+    private int[] paidNow;
     private int pot;
     private HoldEm game;
     private Scanner sc;
@@ -19,6 +22,11 @@ public class Play {
             money[i] = 4900;
             pot += 100;
         }
+        in = new boolean[players];
+        paid = new int[players];
+        for (int i = 0; i < players; i++) {
+            in[i] = true;
+        }
     }
     public void playHoldEm() {
         playRound();
@@ -30,16 +38,14 @@ public class Play {
         playRound();
         System.out.println(game.drawRiver() + "\n");
         playRound();
-        game.scoreHands();
+        int x = game.scoreHands();
+        money[x] += Math.min(paid[x], pot);
+
         
 
     }
     public void playRound() {
-        boolean[] in = new boolean[players];
-        int[] paid = new int[players];
-        for (int i = 0; i < players; i++) {
-            in[i] = true;
-        }
+        paidNow = new int[players];
         int bet = 100;
         int oldBet = 0;
         while (oldBet < bet) {
@@ -48,7 +54,7 @@ public class Play {
                 if(!in[i] || money[i] == 0) {
                     continue;
                 }
-                if(bet == paid[i]) {
+                if(bet == paidNow[i]) {
                     break;
                 }
                 System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPlayer " + (i + 1) + "'s Turn:");
@@ -65,11 +71,13 @@ public class Play {
                             pots[p] = paid[i];
                             p++;
                             paid[i] += money[i];
+                            paidNow[i] += money[i];
                             money[i] = 0;
                             System.out.println("You are all in.");
                             Continue();
                         } else {
                             in[i] = false;
+                            game.removeHand(i);
                             Continue();
                         }
                         continue;
@@ -77,6 +85,7 @@ public class Play {
                     money[i] -= (bet - paid[i]);
                     pot += (bet - paid[i]);
                     paid[i] = bet;
+                    paidNow[i] = bet;
                     System.out.println("You have $" + money[i] + " Remaining");
                     Continue();
                     continue;
@@ -95,6 +104,7 @@ public class Play {
                         money[i] -= (bet - paid[i]);
                         pot += (bet - paid[i]);
                         paid[i] = bet;
+                        paidNow[i] = bet;
                         System.out.println("You have $" + money[i] + " Remaining\n");
                         Continue();
                         continue;
@@ -109,6 +119,7 @@ public class Play {
                     }
                 } else {
                     in[i] = false;
+                    game.removeHand(i);
                     System.out.println("You have Folded");
                     Continue();
 
