@@ -5,8 +5,12 @@ public class Play {
     private int pot;
     private HoldEm game;
     private Scanner sc;
+    private int[] pots;
+    private int p;
     public Play(int players){
-        Scanner sc = new Scanner(System.in);
+        pots = new int[players];
+        p = 0;
+        sc = new Scanner(System.in);
         this.players = players;
         game = new HoldEm(players);
         money = new int[players];
@@ -20,11 +24,11 @@ public class Play {
         playRound();
         System.out.println(game.drawRiver());
         System.out.println(game.drawRiver());
-        System.out.println(game.drawRiver());
+        System.out.println(game.drawRiver() + "\n");
         playRound();
-        System.out.println(game.drawRiver());
+        System.out.println(game.drawRiver() + "\n");
         playRound();
-        System.out.println(game.drawRiver());
+        System.out.println(game.drawRiver() + "\n");
         playRound();
         game.scoreHands();
         
@@ -41,7 +45,7 @@ public class Play {
         while (oldBet < bet) {
             oldBet = bet;
             for (int i = 0; i < players ; i++) {
-                if(!in[i]) {
+                if(!in[i] || money[i] == 0) {
                     continue;
                 }
                 if(bet == paid[i]) {
@@ -58,6 +62,8 @@ public class Play {
                         int allIn = sc.nextInt();
                         if(allIn == 1) {
                             pot += money[i];
+                            pots[p] = paid[i];
+                            p++;
                             paid[i] += money[i];
                             money[i] = 0;
                             System.out.println("You are all in.");
@@ -112,7 +118,7 @@ public class Play {
 
         }
     }
-    private void Continue()
+    public void Continue()
  { 
         System.out.println("Press Enter key to continue...");
         try
